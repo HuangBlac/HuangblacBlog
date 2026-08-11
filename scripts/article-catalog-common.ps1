@@ -176,7 +176,14 @@ function Get-GeneratedCatalogJavaScript($context) {
 
 function Get-GeneratedArticleDataJavaScript($context) {
   $articles = Get-ArticleContentMap $context
-  $json = $articles | ConvertTo-Json -Depth 4
+  # Windows PowerShell 5.1 and PowerShell 7 differ in indentation and HTML
+  # character escaping. Compact output plus explicit escaping keeps the
+  # generated browser data byte-for-byte portable across both runtimes.
+  $json = $articles | ConvertTo-Json -Depth 4 -Compress
+  $json = $json.Replace("&", "\u0026")
+  $json = $json.Replace("'", "\u0027")
+  $json = $json.Replace("<", "\u003c")
+  $json = $json.Replace(">", "\u003e")
   return "window.articleContent = $json;`n"
 }
 
