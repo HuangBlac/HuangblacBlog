@@ -1,6 +1,6 @@
 # HuangBlacBlog
 
-“布莱的小店”是黄布莱（Huang Blac）的个人博客与项目索引，围绕四类内容组织：工作、习作、炒作、创作。
+“小黑的晓店”是黄晓黑的个人博客与项目索引，围绕四类内容组织：工作、习作、炒作、创作。
 
 当前首页采用内容优先的双栏结构：左侧直接呈现代表文章与项目摘要，右侧说明身份、当前关注和浏览方式。页面优先帮助陌生访客快速理解站点与作者，同时保留作者自己的状态入口。
 
@@ -21,7 +21,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\build-site.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\validate-site.ps1
 ```
 
-构建会检查四篇 Markdown 正文与 `article-data.js` 是否同步，并检查全部 JavaScript 语法。生成的 `dist/` 只包含网页运行文件；校验会阻止本名、本地路径、凭据、源码文档和失效的站内链接进入部署产物。
+构建会检查统一文章目录列出的 Markdown 正文与两个网页数据文件是否同步，并检查全部 JavaScript 语法。生成的 `dist/` 只包含网页运行文件；校验会阻止本名、本地路径、凭据、对话导出信息、源码文档和失效的站内链接进入部署产物。
 
 GitHub Actions 会在每次 PR 和 `main` 推送时执行相同的测试与构建。PR 只验证，不发布；`main` 通过全部检查后自动部署到 GitHub Pages。
 
@@ -39,7 +39,7 @@ GitHub Actions 会在每次 PR 和 `main` 推送时执行相同的测试与构�
 .\scripts\sync-article-data.ps1
 ```
 
-文章标题、简介和知乎来源链接由 `article.js` 中的 `articleManifest` 管理。首页摘要与入口位于 `index.html` 的“炒作”区域。
+文章标题、简介、阶段、系列和外部来源统一由 `content/article-catalog.json` 管理。同步命令会生成浏览器直接读取的 `article-catalog.js` 与 `article-data.js`；不要手工编辑这两个生成文件。
 
 ## 主要文件
 
@@ -48,9 +48,11 @@ GitHub Actions 会在每次 PR 和 `main` 推送时执行相同的测试与构�
 - `script.js`：栏目定位与“当前关注”本地编辑交互。
 - `site-data.js`：可独立维护的公开默认内容，例如“当前关注”。
 - `article.html`、`article.css`：站内长文阅读页面。
-- `article.js`、`article-data.js`：文章索引、来源链接与浏览器可直接读取的正文数据。
-- `content/`：站内文章的 Markdown 原稿。
-- `scripts/sync-article-data.ps1`：将 Markdown 原稿同步到网页数据文件。
+- `article.js`：根据统一目录呈现文章、来源链接和系列导航。
+- `article-catalog.js`、`article-data.js`：同步生成的目录与正文网页数据。
+- `content/article-catalog.json`：全部公开文章元数据的唯一来源。
+- `content/`：站内文章的 Markdown 原稿，包含 `content/creative/` 中的娱乐创作正文。
+- `scripts/sync-article-data.ps1`：校验统一目录并同步两个网页数据文件。
 
 ## 当前边界
 

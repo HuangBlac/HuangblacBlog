@@ -1,36 +1,11 @@
-const articleManifest = {
-  "math-to-ai-courses": {
-    title: "数学系转人工智能需要选计算机相关课程吗？",
-    kicker: "人工智能选课 / 知乎回答",
-    deck: "从“小转”与“大转”两条路径出发，讨论数学系学生应该补哪些计算机课程，以及什么时候更该先做一个项目。",
-    date: "发布于 2026-08-06",
-    sourceUrl: "https://www.zhihu.com/question/2060844556388774290/answer/2068708878309758218",
-  },
-  "math-to-cs": {
-    title: "数学系学生如何成功转向计算机？",
-    kicker: "转向计算机 / 知乎回答原稿",
-    deck: "从方向选择、技术栈到实战经验：一个仍在转向过程中的数学系学生所看到的问题。",
-    date: "原稿归档",
-    sourceUrl: "https://www.zhihu.com/question/1948843451870349237/answer/2040152802853380110",
-  },
-  "math-outlook": {
-    title: "数学系的出路在哪？",
-    kicker: "专业选择 / 知乎回答原稿",
-    deck: "从应用数学、现实需求和交叉方向出发，讨论数学知识怎样进入真实问题。",
-    date: "原稿归档",
-    sourceUrl: "https://www.zhihu.com/question/664610171/answer/2025602014432752160",
-  },
-  "math-interdisciplinary": {
-    title: "数学系该学什么交叉方向？",
-    kicker: "交叉方向 / 知乎回答原稿",
-    deck: "围绕 AI4Science、计算数学和代码能力形成的一次阶段性经验分享。",
-    date: "发布于 2025-12-02",
-    sourceUrl: "https://www.zhihu.com/question/1976403480596997396/answer/1979250728703915584",
-  },
-};
-
+const articleCatalog = window.articleCatalog ?? {};
+const catalogArticles = Array.isArray(articleCatalog.articles)
+  ? [...articleCatalog.articles].sort((a, b) => a.order - b.order)
+  : [];
 const slug = new URLSearchParams(window.location.search).get("slug");
-const article = articleManifest[slug];
+const article = catalogArticles.find((item) => item.slug === slug);
+const section = articleCatalog.sections?.[article?.section];
+const stage = articleCatalog.stages?.find((item) => item.id === article?.stage);
 const markdown = window.articleContent?.[slug];
 const titleElement = document.querySelector("[data-article-title]");
 const kickerElement = document.querySelector("[data-article-kicker]");
@@ -38,9 +13,78 @@ const deckElement = document.querySelector("[data-article-deck]");
 const dateElement = document.querySelector("[data-article-date]");
 const bodyElement = document.querySelector("[data-article-body]");
 const sourceLink = document.querySelector("[data-article-source]");
+const sourceFooter = document.querySelector("[data-article-source-footer]");
+const sourceNote = document.querySelector("[data-article-source-note]");
+const backLinks = document.querySelectorAll("[data-article-back]");
+const contextElement = document.querySelector("[data-article-context]");
+const sectionNavLinks = document.querySelectorAll("[data-section-nav]");
+const readerAside = document.querySelector("[data-reader-aside]");
+const seriesSection = document.querySelector("[data-series-section]");
+const seriesLabel = document.querySelector("[data-series-label]");
+const seriesTitle = document.querySelector("[data-series-title]");
+const seriesNav = document.querySelector("[data-series-nav]");
+
+function setSectionContext() {
+  sectionNavLinks.forEach((link) => {
+    if (link.dataset.sectionNav === article?.section) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+
+  if (!article || !section) {
+    contextElement.textContent = "站内原文归档";
+    readerAside.hidden = true;
+    backLinks.forEach((link) => {
+      link.href = "index.html";
+      link.textContent = link.classList.contains("article-back")
+        ? "← 返回首页"
+        : "返回首页 ←";
+    });
+    return;
+  }
+
+  contextElement.textContent = section.context;
+  backLinks.forEach((link) => {
+    link.href = section.anchor;
+    link.textContent = link.classList.contains("article-back")
+      ? `← 返回${section.label}`
+      : `返回${section.label} ←`;
+  });
+
+  if (article.section === "creative") {
+    document.body.classList.add("creative-article");
+    readerAside.hidden = true;
+  }
+}
+
+function renderSeries() {
+  if (!article?.series) return;
+  const series = articleCatalog.series?.find((item) => item.id === article.series);
+  if (!series) return;
+
+  const relatedArticles = catalogArticles.filter((item) => item.series === series.id);
+  seriesLabel.textContent = series.label;
+  seriesTitle.textContent = series.title;
+  seriesNav.replaceChildren(
+    ...relatedArticles.map((item) => {
+      const link = document.createElement("a");
+      link.href = `article.html?slug=${encodeURIComponent(item.slug)}`;
+      link.textContent = item.title;
+      if (item.slug === article.slug) link.setAttribute("aria-current", "page");
+      return link;
+    }),
+  );
+  seriesSection.hidden = false;
+}
+
+setSectionContext();
+renderSeries();
 
 if (!article || typeof markdown !== "string") {
-  document.title = "文章不存在｜布莱的小店";
+  const destination = article && section
+    ? { href: section.anchor, label: section.label }
+    : { href: "index.html", label: "首页" };
+
+  document.title = "文章不存在｜小黑的晓店";
   titleElement.textContent = "没有找到这篇文章";
   kickerElement.textContent = "404 / NOT FOUND";
   deckElement.textContent = "这个站内文章地址可能已经改变。";
@@ -48,19 +92,26 @@ if (!article || typeof markdown !== "string") {
   bodyElement.replaceChildren();
   const message = document.createElement("p");
   const backLink = document.createElement("a");
-  message.textContent = "请返回炒作栏目重新选择文章。";
-  backLink.href = "index.html#buzz";
-  backLink.textContent = "返回炒作栏目 →";
+  message.textContent = `请返回${destination.label}重新选择文章。`;
+  backLink.href = destination.href;
+  backLink.textContent = `返回${destination.label} →`;
   bodyElement.append(message, backLink);
-  sourceLink.hidden = true;
+  sourceFooter.hidden = true;
 } else {
-  document.title = `${article.title}｜布莱的小店`;
+  document.title = `${article.title}｜小黑的晓店`;
   titleElement.textContent = article.title;
-  kickerElement.textContent = article.kicker;
+  kickerElement.textContent = article.kicker ?? `娱乐创作 / ${stage?.label ?? "创作"}`;
   deckElement.textContent = article.deck;
-  dateElement.textContent = article.date;
-  sourceLink.href = article.sourceUrl;
-  bodyElement.replaceChildren(renderMarkdown(markdown, article.title));
+  dateElement.textContent = article.date ?? stage?.label ?? "";
+  if (article.source?.url) {
+    sourceLink.href = article.source.url;
+    sourceLink.textContent = `前往${article.source.label} ↗`;
+    sourceNote.textContent = section.sourceNote;
+    sourceFooter.hidden = false;
+  } else {
+    sourceFooter.hidden = true;
+  }
+  bodyElement.replaceChildren(renderMarkdown(markdown, article.title, article.format === "prose"));
 }
 
 function escapeHtml(value) {
@@ -93,7 +144,7 @@ function isBlockStart(line) {
   );
 }
 
-function renderMarkdown(source, articleTitle) {
+function renderMarkdown(source, articleTitle, preserveSourceParagraphs = false) {
   const fragment = document.createDocumentFragment();
   const lines = source.replace(/^\uFEFF/, "").replaceAll("\r\n", "\n").split("\n");
   const firstContentLine = lines.findIndex((line) => line.trim());
@@ -169,6 +220,7 @@ function renderMarkdown(source, articleTitle) {
     const paragraphLines = [trimmed];
     index += 1;
     while (
+      !preserveSourceParagraphs &&
       index < lines.length &&
       lines[index].trim() &&
       !isBlockStart(lines[index])

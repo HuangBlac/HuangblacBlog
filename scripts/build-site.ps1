@@ -27,7 +27,9 @@ $javascriptFiles = @(
   "script.js",
   "site-data.js",
   "article.js",
-  "article-data.js"
+  "article-data.js",
+  "article-catalog.js",
+  "caidan.js"
 )
 
 $node = Get-Command node -ErrorAction Stop
@@ -51,7 +53,12 @@ $publicFiles = @(
   "article.html",
   "article.css",
   "article.js",
-  "article-data.js"
+  "article-data.js",
+  "article-catalog.js",
+  "caidan.html",
+  "caidan.js",
+  "after-hours.html",
+  "assets/huangblac-avatar-512.png"
 )
 
 foreach ($fileName in $publicFiles) {
@@ -59,7 +66,9 @@ foreach ($fileName in $publicFiles) {
   if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf)) {
     throw "Required public file is missing: $fileName"
   }
-  Copy-Item -LiteralPath $sourcePath -Destination (Join-Path $resolvedOutput $fileName)
+  $destinationPath = Join-Path $resolvedOutput $fileName
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destinationPath) | Out-Null
+  Copy-Item -LiteralPath $sourcePath -Destination $destinationPath
 }
 
 $utf8WithoutBom = New-Object System.Text.UTF8Encoding($false)

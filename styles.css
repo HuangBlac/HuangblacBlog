@@ -60,6 +60,18 @@ a {
   outline-offset: 3px;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .skip-link {
   position: fixed;
   top: 0.75rem;
@@ -601,6 +613,18 @@ a {
   background: var(--ink);
 }
 
+.catalog-fallback {
+  margin: 1.5rem clamp(1.4rem, 3.4vw, 3.2rem);
+  color: var(--muted);
+  font-family: var(--serif);
+  line-height: 1.7;
+}
+
+.creative-catalog > .catalog-fallback {
+  margin-inline: 0;
+  color: #c6cbd2;
+}
+
 .section-outlink {
   display: block;
   width: fit-content;
@@ -636,11 +660,243 @@ a {
   font-size: clamp(1.7rem, 3.2vw, 2.7rem);
 }
 
-.backroom > div > p:last-child {
+.backroom > div > p {
   max-width: 720px;
   color: #c6cbd2;
   font-family: var(--serif);
   line-height: 1.8;
+}
+
+.game-projects {
+  max-width: 760px;
+  margin-top: 2rem;
+}
+
+.game-projects-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.game-projects-label,
+.game-projects-heading h3,
+.game-project-card h4,
+.game-project-card p {
+  margin: 0;
+}
+
+.game-projects-label,
+.game-projects-heading > span,
+.game-project-status {
+  color: var(--acid);
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.game-projects-heading h3 {
+  margin-top: 0.2rem;
+  color: var(--paper);
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+}
+
+.game-project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.game-project-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.15rem;
+  background: #171b20;
+}
+
+.game-project-card-featured {
+  background: #20262d;
+}
+
+.game-project-card h4 {
+  color: var(--paper);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+}
+
+.game-project-card > p:not(.game-project-status) {
+  color: #c6cbd2;
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+
+.game-project-card a {
+  margin-top: auto;
+  color: var(--acid);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.game-project-card a:hover,
+.game-project-card a:focus-visible {
+  color: var(--paper);
+}
+
+.creative-catalog {
+  display: grid;
+  max-width: 760px;
+  gap: 1.25rem;
+  margin-top: 1.8rem;
+}
+
+.creative-stage {
+  min-width: 0;
+}
+
+.creative-stage-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.creative-stage-heading h3,
+.creative-stage-label,
+.creative-stage-note {
+  margin: 0;
+}
+
+.creative-stage-heading h3 {
+  margin-top: 0.2rem;
+  color: var(--paper);
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+}
+
+.creative-stage-heading > span,
+.creative-stage-label {
+  color: var(--acid);
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.creative-stage-note {
+  padding-top: 0.7rem;
+  color: #c6cbd2;
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.creative-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.5rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.creative-index li {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.creative-index li a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0;
+}
+
+.creative-index strong {
+  color: var(--paper);
+  font-family: var(--serif);
+}
+
+.creative-index span {
+  color: #c6cbd2;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.creative-incomplete {
+  overflow: hidden;
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+  background: #171b20;
+}
+
+.creative-incomplete > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  color: var(--paper);
+  font-family: var(--serif);
+  font-weight: 800;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.creative-incomplete > summary:hover,
+.creative-incomplete > summary:focus-visible {
+  color: var(--acid);
+}
+
+.creative-incomplete > summary span {
+  color: #aeb5bf;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.creative-incomplete[open] > summary {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.creative-incomplete[open] > summary span {
+  font-size: 0;
+}
+
+.creative-incomplete[open] > summary span::after {
+  content: "收起 ↑";
+  font-size: 0.65rem;
+}
+
+.creative-incomplete-body {
+  display: grid;
+  gap: 1.8rem;
+  padding: 1.15rem;
+}
+
+.creative-warning {
+  margin: 0;
+  padding: 1rem;
+  border-left: 5px solid var(--acid);
+  color: var(--ink);
+  background: var(--acid);
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.75;
 }
 
 .sidebar {
@@ -664,48 +920,21 @@ a {
 }
 
 .portrait-mark {
-  position: relative;
-  display: grid;
   width: 112px;
   margin: 1.3rem auto;
   aspect-ratio: 1;
-  place-items: center;
+  overflow: hidden;
   border: 7px solid var(--paper);
   border-radius: 50%;
-  color: var(--paper);
-  background:
-    linear-gradient(135deg, transparent 48%, rgba(255, 255, 255, 0.25) 49% 51%, transparent 52%),
-    var(--blue);
+  background: var(--paper);
   box-shadow: 0 0 0 1px #bfcbe0;
 }
 
-.portrait-mark::before,
-.portrait-mark::after {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--acid);
-  content: "";
-}
-
-.portrait-mark::before {
-  top: 19px;
-  right: 20px;
-  width: 8px;
-  height: 8px;
-}
-
-.portrait-mark::after {
-  bottom: 19px;
-  left: 23px;
-  width: 12px;
-  height: 12px;
-  background: var(--orange);
-}
-
-.portrait-mark span {
-  font-family: var(--serif);
-  font-size: 1.8rem;
-  font-weight: 900;
+.portrait-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .profile-card h2,
@@ -951,6 +1180,242 @@ a {
   color: var(--acid);
 }
 
+.site-footer .footer-secret-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer .footer-secret-link:hover,
+.site-footer .footer-secret-link:focus-visible {
+  color: var(--acid);
+}
+
+.secret-body {
+  min-height: 100vh;
+  color: var(--paper);
+  background:
+    linear-gradient(rgba(216, 240, 90, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(216, 240, 90, 0.025) 1px, transparent 1px),
+    #11151a;
+  background-size: 100% 32px, 32px 100%, auto;
+}
+
+.secret-shell {
+  width: min(calc(100% - 2rem), 960px);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 4rem) 0;
+}
+
+.secret-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.secret-page-header p,
+.secret-page-header h1 {
+  margin: 0;
+}
+
+.secret-page-header h1 {
+  max-width: 680px;
+  margin-top: 0.35rem;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 6vw, 4.8rem);
+  line-height: 1.04;
+}
+
+.secret-kicker,
+.secret-section-label,
+.secret-step-number {
+  color: var(--acid);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.secret-home-link {
+  flex: 0 0 auto;
+  color: #b9c0c8;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.secret-home-link:hover,
+.secret-home-link:focus-visible {
+  color: var(--acid);
+}
+
+.secret-intro {
+  max-width: 700px;
+  margin: 1.4rem 0 0;
+  color: #c8cdd3;
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2.3vw, 1.18rem);
+  line-height: 1.85;
+}
+
+.puzzle-panel,
+.secret-content-section {
+  margin-top: 2rem;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(31, 37, 45, 0.82);
+}
+
+.puzzle-list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.puzzle-list li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+  color: #c8cdd3;
+  font-family: var(--serif);
+  line-height: 1.7;
+}
+
+.puzzle-list li:last-child {
+  border-bottom: 0;
+}
+
+.puzzle-key {
+  display: inline;
+  padding: 0;
+  border: 0;
+  color: var(--acid);
+  background: transparent;
+  font-family: inherit;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.puzzle-key:hover,
+.puzzle-key:focus-visible {
+  color: var(--paper);
+}
+
+.puzzle-key.is-correct {
+  color: #84905b;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.puzzle-status {
+  min-height: 1.6em;
+  margin: 1.2rem 0 0;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--acid);
+  color: var(--ink);
+  background: var(--acid);
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.65;
+}
+
+.secret-unlocked .puzzle-panel {
+  border-color: var(--acid);
+  box-shadow: 0 0 0 1px var(--acid), 0 0 42px rgba(216, 240, 90, 0.14);
+}
+
+.secret-anchor-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+
+.secret-anchor-nav a {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: var(--paper);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.secret-anchor-nav a:hover,
+.secret-anchor-nav a:focus-visible {
+  color: var(--ink);
+  background: var(--acid);
+  border-color: var(--acid);
+}
+
+.secret-content-section h2 {
+  max-width: 700px;
+  margin: 0.3rem 0 1rem;
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 4vw, 2.5rem);
+}
+
+.secret-content-section > p:not(.secret-section-label) {
+  max-width: 720px;
+  color: #c8cdd3;
+  font-family: var(--serif);
+  line-height: 1.9;
+}
+
+.secret-plan-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1.4rem 0 0;
+  padding: 1px;
+  background: rgba(255, 255, 255, 0.18);
+  list-style: none;
+}
+
+.secret-plan-list li {
+  min-width: 0;
+  padding: 1.1rem;
+  background: #171b20;
+}
+
+.secret-plan-list strong {
+  display: block;
+  margin: 0.35rem 0 0.6rem;
+  color: var(--paper);
+  font-family: var(--serif);
+  font-size: 1.08rem;
+}
+
+.secret-plan-list p {
+  margin: 0;
+  color: #bfc5cc;
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.secret-page-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  color: #9299a1;
+  font-size: 0.7rem;
+}
+
+.secret-page-footer a {
+  color: var(--acid);
+}
+
 @keyframes settle {
   from {
     opacity: 0;
@@ -1143,6 +1608,27 @@ a {
 
   .public-note {
     margin-inline: 1rem;
+  }
+
+  .creative-index {
+    grid-template-columns: 1fr;
+  }
+
+  .game-project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .secret-page-header,
+  .secret-page-footer {
+    flex-direction: column;
+  }
+
+  .secret-plan-list {
+    grid-template-columns: 1fr;
+  }
+
+  .creative-index span {
+    text-align: left;
   }
 
   .section-outlink {

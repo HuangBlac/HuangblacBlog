@@ -185,3 +185,140 @@ if (focusWidget) {
     if (event.key === "Escape" && !editor.hidden) closeEditor();
   });
 }
+
+const articleCatalog = window.articleCatalog;
+const catalogArticles = Array.isArray(articleCatalog?.articles)
+  ? [...articleCatalog.articles].sort((a, b) => a.order - b.order)
+  : [];
+const publicIndex = document.querySelector("[data-public-index]");
+const creativeIndex = document.querySelector("[data-creative-index]");
+
+function makeArticleHref(slug) {
+  return `article.html?slug=${encodeURIComponent(slug)}`;
+}
+
+function renderPublicIndex() {
+  if (!publicIndex || !articleCatalog) return;
+
+  const entries = catalogArticles
+    .filter((item) => item.section === "buzz")
+    .map((item) => {
+      const article = document.createElement("article");
+      const meta = document.createElement("p");
+      const heading = document.createElement("h3");
+      const headingLink = document.createElement("a");
+      const deck = document.createElement("p");
+      const actions = document.createElement("div");
+      const readLink = document.createElement("a");
+
+      article.className = "public-note public-note-linked";
+      meta.className = "entry-meta";
+      actions.className = "public-note-actions";
+      readLink.className = "read-on-site";
+      meta.textContent = [item.topic, item.date].filter(Boolean).join(" · ");
+      headingLink.href = makeArticleHref(item.slug);
+      headingLink.textContent = item.title;
+      deck.textContent = item.deck;
+      readLink.href = makeArticleHref(item.slug);
+      readLink.textContent = "站内阅读全文 →";
+
+      heading.append(headingLink);
+      actions.append(readLink);
+      if (item.source?.url) {
+        const sourceLink = document.createElement("a");
+        sourceLink.href = item.source.url;
+        sourceLink.target = "_blank";
+        sourceLink.rel = "noreferrer";
+        sourceLink.textContent = `${item.source.label} ↗`;
+        actions.append(sourceLink);
+      }
+
+      article.append(meta, heading, deck, actions);
+      return article;
+    });
+
+  publicIndex.replaceChildren(...entries);
+}
+
+function makeCreativeList(items, action) {
+  const list = document.createElement("ul");
+  list.className = "creative-index";
+
+  items.forEach((item) => {
+    const listItem = document.createElement("li");
+    const link = document.createElement("a");
+    const title = document.createElement("strong");
+    const status = document.createElement("span");
+
+    link.href = makeArticleHref(item.slug);
+    title.textContent = item.title;
+    status.textContent = action;
+    link.append(title, status);
+    listItem.append(link);
+    list.append(listItem);
+  });
+
+  return list;
+}
+
+function makeCreativeStage(stage) {
+  const items = catalogArticles.filter(
+    (item) => item.section === "creative" && item.stage === stage.id,
+  );
+  const section = document.createElement("section");
+  const heading = document.createElement("div");
+  const headingText = document.createElement("div");
+  const eyebrow = document.createElement("p");
+  const title = document.createElement("h3");
+  const count = document.createElement("span");
+  const note = document.createElement("p");
+
+  section.className = "creative-stage";
+  heading.className = "creative-stage-heading";
+  eyebrow.className = "creative-stage-label";
+  note.className = "creative-stage-note";
+  eyebrow.textContent = stage.eyebrow;
+  title.textContent = stage.label;
+  count.textContent = `${items.length} 篇`;
+  note.textContent = stage.note;
+
+  headingText.append(eyebrow, title);
+  heading.append(headingText, count);
+  section.append(heading, note, makeCreativeList(items, stage.action));
+  return section;
+}
+
+function renderCreativeIndex() {
+  if (!creativeIndex || !articleCatalog || !Array.isArray(articleCatalog.stages)) return;
+
+  const primaryStages = articleCatalog.stages.filter((stage) => !stage.collapsed);
+  const collapsedStages = articleCatalog.stages.filter((stage) => stage.collapsed);
+  const sections = primaryStages.map((stage) => makeCreativeStage(stage));
+
+  if (collapsedStages.length) {
+    const incomplete = document.createElement("details");
+    const incompleteSummary = document.createElement("summary");
+    const summaryHint = document.createElement("span");
+    const incompleteBody = document.createElement("div");
+    const warning = document.createElement("p");
+
+    incomplete.className = "creative-incomplete";
+    incompleteSummary.append(`${articleCatalog.creative.incompleteTitle} `);
+    summaryHint.textContent = articleCatalog.creative.expandLabel;
+    incompleteSummary.append(summaryHint);
+    incompleteBody.className = "creative-incomplete-body";
+    warning.className = "creative-warning";
+    warning.textContent = articleCatalog.creative.warning;
+    incompleteBody.append(
+      warning,
+      ...collapsedStages.map((stage) => makeCreativeStage(stage)),
+    );
+    incomplete.append(incompleteSummary, incompleteBody);
+    sections.push(incomplete);
+  }
+
+  creativeIndex.replaceChildren(...sections);
+}
+
+renderPublicIndex();
+renderCreativeIndex();

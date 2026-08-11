@@ -15,6 +15,10 @@
   margin-top: 1rem;
 }
 
+.creative-article .reader-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .article-reader {
   overflow: hidden;
   border-radius: 7px;
@@ -86,6 +90,15 @@
 
 .article-body p {
   margin: 0 0 1.35em;
+}
+
+.creative-article .article-body {
+  max-width: 780px;
+  line-height: 2;
+}
+
+.creative-article .article-body p {
+  margin-bottom: 1.05em;
 }
 
 .article-body h2,

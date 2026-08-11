@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="布莱的小店站内文章。">
+  <meta name="description" content="小黑的晓店站内文章。">
   <meta name="theme-color" content="#262a2f">
-  <title>站内文章｜布莱的小店</title>
+  <title>站内文章｜小黑的晓店</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="article.css">
 </head>
@@ -15,16 +15,16 @@
   <div class="site-frame" id="top">
     <header class="site-header article-site-header">
       <div class="masthead">
-        <a class="brand" href="index.html" aria-label="返回布莱的小店首页">
-          <span class="brand-mark" aria-hidden="true">布</span>
+        <a class="brand" href="index.html" aria-label="返回小黑的晓店首页">
+          <span class="brand-mark" aria-hidden="true">晓</span>
           <span>
-            <strong>布莱的小店</strong>
-            <small>BLAI'S CORNER</small>
+            <strong>小黑的晓店</strong>
+            <small>XIAOHEI'S CORNER</small>
           </span>
         </a>
-        <p class="masthead-note">站内原文归档</p>
+        <p class="masthead-note" data-article-context>站内原文归档</p>
         <div class="masthead-links">
-          <a href="index.html#buzz">返回炒作栏目 ←</a>
+          <a href="index.html#buzz" data-article-back>返回炒作栏目 ←</a>
         </div>
       </div>
 
@@ -32,21 +32,21 @@
         <a href="index.html#featured"><strong>首页精选</strong><small>Featured</small></a>
         <a href="index.html#work"><strong>工作</strong><small>Work</small></a>
         <a href="index.html#practice"><strong>习作</strong><small>Practice</small></a>
-        <a href="index.html#buzz" aria-current="page"><strong>炒作</strong><small>Public Notes</small></a>
+        <a href="index.html#buzz" aria-current="page" data-section-nav="buzz"><strong>炒作</strong><small>Public Notes</small></a>
         <a href="index.html#about"><strong>关于店主</strong><small>About</small></a>
       </nav>
     </header>
 
     <div class="reader-grid">
       <main class="article-reader">
-        <a class="article-back" href="index.html#buzz">← 返回炒作栏目</a>
+        <a class="article-back" href="index.html#buzz" data-article-back>← 返回炒作栏目</a>
 
         <header class="article-header">
           <p class="article-kicker" data-article-kicker>PUBLIC NOTES / 原稿归档</p>
           <h1 data-article-title>正在载入文章……</h1>
           <p class="article-deck" data-article-deck></p>
           <div class="article-meta">
-            <span>作者：黄布莱（Huang Blac）</span>
+            <span>作者：黄晓黑</span>
             <span data-article-date></span>
           </div>
         </header>
@@ -55,22 +55,17 @@
           <p>正在载入原文……</p>
         </div>
 
-        <footer class="article-source">
-          <p>以上为本地归档的原稿内容。知乎页面可能包含后续编辑、评论和互动信息。</p>
+        <footer class="article-source" data-article-source-footer>
+          <p data-article-source-note>以上为本地归档的原稿内容。外部页面可能包含后续编辑、评论和互动信息。</p>
           <a data-article-source href="#" target="_blank" rel="noreferrer">前往知乎原回答 ↗</a>
         </footer>
       </main>
 
-      <aside class="reader-aside" aria-label="文章导航">
-        <section>
-          <p class="card-label">SERIES / 本系列</p>
-          <h2>数学系的转向与选择</h2>
-          <nav aria-label="相关文章">
-            <a href="article.html?slug=math-to-ai-courses">数学系转人工智能需要选计算机相关课程吗？</a>
-            <a href="article.html?slug=math-to-cs">数学系学生如何成功转向计算机？</a>
-            <a href="article.html?slug=math-outlook">数学系的出路在哪？</a>
-            <a href="article.html?slug=math-interdisciplinary">数学系该学什么交叉方向？</a>
-          </nav>
+      <aside class="reader-aside" aria-label="文章导航" data-reader-aside>
+        <section data-series-section hidden>
+          <p class="card-label" data-series-label>SERIES / 本系列</p>
+          <h2 data-series-title></h2>
+          <nav aria-label="相关文章" data-series-nav></nav>
         </section>
 
         <section class="reader-note">
@@ -81,13 +76,14 @@
     </div>
 
     <footer class="site-footer">
-      <p><strong>布莱的小店</strong> · 站内原文归档。</p>
+      <p><strong>小黑的晓店</strong> · 站内原文归档。</p>
       <a href="#top">回到顶部 ↑</a>
-      <p>© 2026 Huang Blac</p>
+      <p>© 2026 黄晓黑</p>
     </footer>
   </div>
 
   <script src="article-data.js"></script>
+  <script src="article-catalog.js"></script>
   <script src="article.js"></script>
 </body>
 </html>

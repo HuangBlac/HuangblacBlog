@@ -1,0 +1,553 @@
+window.articleCatalog = {
+  "sections": {
+    "buzz": {
+      "label": "炒作栏目",
+      "anchor": "index.html#buzz",
+      "context": "站内原文归档",
+      "sourceNote": "以上为本地归档的原稿内容。外部页面可能包含后续编辑、评论和互动信息。"
+    },
+    "creative": {
+      "label": "创作栏目",
+      "anchor": "index.html#creative",
+      "context": "创作原稿归档"
+    }
+  },
+  "stages": [
+    {
+      "id": "finished",
+      "label": "完结短篇",
+      "eyebrow": "FINISHED / 已完成",
+      "note": "已有完整结尾，可以直接阅读。",
+      "action": "完结 · 阅读 →",
+      "collapsed": false
+    },
+    {
+      "id": "draft",
+      "label": "草稿",
+      "eyebrow": "DRAFTS / 写作中",
+      "note": "已有部分正文，但仍需要继续整理和完成。",
+      "action": "草稿 · 阅读 →",
+      "collapsed": true
+    },
+    {
+      "id": "idea",
+      "label": "灵感",
+      "eyebrow": "IDEAS / 初步想法",
+      "note": "只有初步的概念、设定或片段。",
+      "action": "灵感 · 阅读 →",
+      "collapsed": true
+    }
+  ],
+  "series": [
+    {
+      "id": "math-transition",
+      "label": "SERIES / 本系列",
+      "title": "数学系的转向与选择"
+    }
+  ],
+  "creative": {
+    "incompleteTitle": "未完成内容：草稿与灵感",
+    "expandLabel": "展开查看 →",
+    "warning": "以下的部分完成度太低，建议不要看，如果你乐意你可以把它们写完然后发给我，我会加上你的名字。"
+  },
+  "articles": [
+    {
+      "slug": "math-to-ai-courses",
+      "content": "content/math-to-ai-courses.md",
+      "section": "buzz",
+      "title": "数学系转人工智能需要选计算机相关课程吗？",
+      "topic": "人工智能选课",
+      "kicker": "人工智能选课 / 知乎回答",
+      "deck": "从“小转”与“大转”两条路径出发，讨论数学系学生应该补哪些计算机课程，以及什么时候更该先做一个项目。",
+      "date": "发布于 2026-08-06",
+      "source": {
+        "label": "知乎原回答",
+        "url": "https://www.zhihu.com/question/2060844556388774290/answer/2068708878309758218"
+      },
+      "series": "math-transition",
+      "format": "markdown",
+      "order": 10
+    },
+    {
+      "slug": "math-to-cs",
+      "content": "content/math-to-cs.md",
+      "section": "buzz",
+      "title": "数学系学生如何成功转向计算机？",
+      "topic": "转向计算机",
+      "kicker": "转向计算机 / 知乎回答原稿",
+      "deck": "从方向选择、技术栈到实战经验，讨论数学系学生真正开始转向计算机以后会遇到什么。",
+      "date": "原稿归档",
+      "source": {
+        "label": "知乎原回答",
+        "url": "https://www.zhihu.com/question/1948843451870349237/answer/2040152802853380110"
+      },
+      "series": "math-transition",
+      "format": "markdown",
+      "order": 20
+    },
+    {
+      "slug": "math-outlook",
+      "content": "content/math-outlook.md",
+      "section": "buzz",
+      "title": "数学系的出路在哪？",
+      "topic": "专业选择",
+      "kicker": "专业选择 / 知乎回答原稿",
+      "deck": "从应用数学的实际需求出发，讨论数学知识怎样进入计算、人工智能和工业问题。",
+      "date": "原稿归档",
+      "source": {
+        "label": "知乎原回答",
+        "url": "https://www.zhihu.com/question/664610171/answer/2025602014432752160"
+      },
+      "series": "math-transition",
+      "format": "markdown",
+      "order": 30
+    },
+    {
+      "slug": "math-interdisciplinary",
+      "content": "content/math-interdisciplinary.md",
+      "section": "buzz",
+      "title": "数学系该学什么交叉方向？",
+      "topic": "交叉方向",
+      "kicker": "交叉方向 / 知乎回答原稿",
+      "deck": "围绕 AI4Science、计算数学和代码能力，记录一名数学系学生对交叉方向的阶段性判断。",
+      "date": "发布于 2025-12-02",
+      "source": {
+        "label": "知乎原回答",
+        "url": "https://www.zhihu.com/question/1976403480596997396/answer/1979250728703915584"
+      },
+      "series": "math-transition",
+      "format": "markdown",
+      "order": 40
+    },
+    {
+      "slug": "creative-027",
+      "content": "content/creative/creative-027.md",
+      "section": "creative",
+      "title": "狼与香辛料，但是更金融",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 10
+    },
+    {
+      "slug": "creative-028",
+      "content": "content/creative/creative-028.md",
+      "section": "creative",
+      "title": "世界观01",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 20
+    },
+    {
+      "slug": "creative-029",
+      "content": "content/creative/creative-029.md",
+      "section": "creative",
+      "title": "世界观03",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 30
+    },
+    {
+      "slug": "creative-025",
+      "content": "content/creative/creative-025.md",
+      "section": "creative",
+      "title": "浪漫独行乐队",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 40
+    },
+    {
+      "slug": "huang-adventure-8",
+      "content": "content/creative/huang-adventure-8.md",
+      "section": "creative",
+      "title": "黄的冒险 8",
+      "deck": "晚自习与规则怪谈交织的一次校园冒险。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 50
+    },
+    {
+      "slug": "huang-adventure-7",
+      "content": "content/creative/huang-adventure-7.md",
+      "section": "creative",
+      "title": "黄的冒险 7",
+      "deck": "一次前往未知星系、寻找非碳基生命的科考冒险。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 60
+    },
+    {
+      "slug": "creative-022",
+      "content": "content/creative/creative-022.md",
+      "section": "creative",
+      "title": "黄9",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 70
+    },
+    {
+      "slug": "creative-024",
+      "content": "content/creative/creative-024.md",
+      "section": "creative",
+      "title": "混沌四神",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 80
+    },
+    {
+      "slug": "creative-023",
+      "content": "content/creative/creative-023.md",
+      "section": "creative",
+      "title": "设定集",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 90
+    },
+    {
+      "slug": "creative-038",
+      "content": "content/creative/creative-038.md",
+      "section": "creative",
+      "title": "我的克研人生",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 100
+    },
+    {
+      "slug": "creative-037",
+      "content": "content/creative/creative-037.md",
+      "section": "creative",
+      "title": "犹如原子弹爆炸，我吓得瘫坐在地",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 110
+    },
+    {
+      "slug": "creative-039",
+      "content": "content/creative/creative-039.md",
+      "section": "creative",
+      "title": "中篇03",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 120
+    },
+    {
+      "slug": "creative-041",
+      "content": "content/creative/creative-041.md",
+      "section": "creative",
+      "title": "组乐队的祥子",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 130
+    },
+    {
+      "slug": "creative-040",
+      "content": "content/creative/creative-040.md",
+      "section": "creative",
+      "title": "中篇04",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 140
+    },
+    {
+      "slug": "creative-036",
+      "content": "content/creative/creative-036.md",
+      "section": "creative",
+      "title": "县城赛博朋克",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 150
+    },
+    {
+      "slug": "creative-032",
+      "content": "content/creative/creative-032.md",
+      "section": "creative",
+      "title": "素睦二创-一改",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 160
+    },
+    {
+      "slug": "creative-031",
+      "content": "content/creative/creative-031.md",
+      "section": "creative",
+      "title": "素睦二创",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 170
+    },
+    {
+      "slug": "creative-033",
+      "content": "content/creative/creative-033.md",
+      "section": "creative",
+      "title": "素睦二创-一改",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 180
+    },
+    {
+      "slug": "creative-035",
+      "content": "content/creative/creative-035.md",
+      "section": "creative",
+      "title": "我的智力真的能超过边牧吗？",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 190
+    },
+    {
+      "slug": "creative-034",
+      "content": "content/creative/creative-034.md",
+      "section": "creative",
+      "title": "我成为民科了，算了，明天再成",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 200
+    },
+    {
+      "slug": "creative-021",
+      "content": "content/creative/creative-021.md",
+      "section": "creative",
+      "title": "黄6",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 210
+    },
+    {
+      "slug": "creative-008",
+      "content": "content/creative/creative-008.md",
+      "section": "creative",
+      "title": "短篇05",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 220
+    },
+    {
+      "slug": "creative-007",
+      "content": "content/creative/creative-007.md",
+      "section": "creative",
+      "title": "短篇04",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 230
+    },
+    {
+      "slug": "creative-009",
+      "content": "content/creative/creative-009.md",
+      "section": "creative",
+      "title": "短篇10",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 240
+    },
+    {
+      "slug": "creative-011",
+      "content": "content/creative/creative-011.md",
+      "section": "creative",
+      "title": "幻想灵感商店",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 250
+    },
+    {
+      "slug": "creative-010",
+      "content": "content/creative/creative-010.md",
+      "section": "creative",
+      "title": "短篇08",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：灵感。",
+      "stage": "idea",
+      "format": "prose",
+      "order": 260
+    },
+    {
+      "slug": "creative-006",
+      "content": "content/creative/creative-006.md",
+      "section": "creative",
+      "title": "灯祥小故事",
+      "deck": "灯与祥子之间的一则完整短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 270
+    },
+    {
+      "slug": "creative-001",
+      "content": "content/creative/creative-001.md",
+      "section": "creative",
+      "title": "AI赛博精神病发作，遂作此篇",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 280
+    },
+    {
+      "slug": "creative-003",
+      "content": "content/creative/creative-003.md",
+      "section": "creative",
+      "title": "mygo日常",
+      "deck": "围绕 MyGO!!!!! 成员展开的一则日常短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 290
+    },
+    {
+      "slug": "creative-005",
+      "content": "content/creative/creative-005.md",
+      "section": "creative",
+      "title": "大祥席地而坐",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 300
+    },
+    {
+      "slug": "creative-004",
+      "content": "content/creative/creative-004.md",
+      "section": "creative",
+      "title": "Rick & 睦子米",
+      "deck": "Rick 与睦子米共同登场的一则完整短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 310
+    },
+    {
+      "slug": "creative-042",
+      "content": "content/creative/creative-042.md",
+      "section": "creative",
+      "title": "寻找立希",
+      "deck": "围绕立希生日礼物展开的一则 MyGO!!!!! 日常短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 320
+    },
+    {
+      "slug": "huang-adventure-28",
+      "content": "content/creative/huang-adventure-28.md",
+      "section": "creative",
+      "title": "黄的冒险 28",
+      "deck": "一个写作者在失声边缘继续敲下文字的故事。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 330
+    },
+    {
+      "slug": "huang-adventure-22",
+      "content": "content/creative/huang-adventure-22.md",
+      "section": "creative",
+      "title": "黄的冒险 22",
+      "deck": "调查凋零骷髅与煤炭来源的城市异常任务。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 340
+    },
+    {
+      "slug": "creative-018",
+      "content": "content/creative/creative-018.md",
+      "section": "creative",
+      "title": "黄3",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 350
+    },
+    {
+      "slug": "creative-020",
+      "content": "content/creative/creative-020.md",
+      "section": "creative",
+      "title": "黄5",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 360
+    },
+    {
+      "slug": "creative-019",
+      "content": "content/creative/creative-019.md",
+      "section": "creative",
+      "title": "黄4",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 370
+    },
+    {
+      "slug": "creative-017",
+      "content": "content/creative/creative-017.md",
+      "section": "creative",
+      "title": "黄2",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 380
+    },
+    {
+      "slug": "creative-013",
+      "content": "content/creative/creative-013.md",
+      "section": "creative",
+      "title": "黄1",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 390
+    },
+    {
+      "slug": "creative-012",
+      "content": "content/creative/creative-012.md",
+      "section": "creative",
+      "title": "放弃第一性",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：草稿。",
+      "stage": "draft",
+      "format": "prose",
+      "order": 400
+    },
+    {
+      "slug": "creative-014",
+      "content": "content/creative/creative-014.md",
+      "section": "creative",
+      "title": "黄11",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 410
+    },
+    {
+      "slug": "creative-016",
+      "content": "content/creative/creative-016.md",
+      "section": "creative",
+      "title": "黄13",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 420
+    },
+    {
+      "slug": "creative-015",
+      "content": "content/creative/creative-015.md",
+      "section": "creative",
+      "title": "黄12",
+      "deck": "来自娱乐创作文件夹的公开创作条目，当前阶段：完结短篇。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 430
+    }
+  ]
+};

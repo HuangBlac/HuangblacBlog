@@ -1,22 +1,13 @@
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$contentRoot = Join-Path $projectRoot "content"
-$outputPath = Join-Path $projectRoot "article-data.js"
+. (Join-Path $PSScriptRoot "article-catalog-common.ps1")
 
-function Read-Article([string]$fileName) {
-  $path = Join-Path $contentRoot $fileName
-  return [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
-}
-
-$articles = [ordered]@{
-  "math-to-ai-courses" = Read-Article "math-to-ai-courses.md"
-  "math-to-cs" = Read-Article "math-to-cs.md"
-  "math-outlook" = Read-Article "math-outlook.md"
-  "math-interdisciplinary" = Read-Article "math-interdisciplinary.md"
-}
-
-$json = $articles | ConvertTo-Json -Depth 3
-$javascript = "window.articleContent = $json;`n"
+$context = Get-ArticleCatalogContext $projectRoot
+$catalogOutputPath = Join-Path $projectRoot "article-catalog.js"
+$articleOutputPath = Join-Path $projectRoot "article-data.js"
+$catalogJavaScript = Get-GeneratedCatalogJavaScript $context
+$articleJavaScript = Get-GeneratedArticleDataJavaScript $context
 $utf8WithoutBom = New-Object System.Text.UTF8Encoding($false)
-[System.IO.File]::WriteAllText($outputPath, $javascript, $utf8WithoutBom)
+[System.IO.File]::WriteAllText($catalogOutputPath, $catalogJavaScript, $utf8WithoutBom)
+[System.IO.File]::WriteAllText($articleOutputPath, $articleJavaScript, $utf8WithoutBom)
 
-Write-Output "Updated article-data.js from content/*.md"
+Write-Output "Updated article-catalog.js and article-data.js from content/article-catalog.json"

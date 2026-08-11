@@ -25,6 +25,10 @@ $requiredFiles = @(
   "article.css",
   "article.js",
   "article-data.js",
+  "article-catalog.js",
+  "caidan.html",
+  "caidan.js",
+  "after-hours.html",
   ".nojekyll"
 )
 
@@ -49,6 +53,8 @@ $forbiddenText = @(
   "AppData",
   "ZHIHU_ACCESS_SECRET",
   "Access Secret",
+  "chatgpt.com/g/",
+  "ChatGPT Exporter",
   "PSPath",
   "PSParentPath"
 )
