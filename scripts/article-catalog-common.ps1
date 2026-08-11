@@ -162,10 +162,13 @@ function Get-ArticleCatalogContext([string]$projectRoot) {
 function Get-ArticleContentMap($context) {
   $articles = [ordered]@{}
   foreach ($slug in $context.ArticlePaths.Keys) {
-    $articles[$slug] = [System.IO.File]::ReadAllText(
+    $content = [System.IO.File]::ReadAllText(
       $context.ArticlePaths[$slug],
       [System.Text.Encoding]::UTF8
     )
+    # Git checks text out as CRLF on Windows and LF on Linux. Normalize before
+    # generating browser data so the committed artifact is platform-neutral.
+    $articles[$slug] = $content.Replace("`r`n", "`n").Replace("`r", "`n")
   }
   return $articles
 }
