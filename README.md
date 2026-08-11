@@ -12,6 +12,19 @@ python -m http.server 4173 --bind 127.0.0.1
 
 访问 `http://127.0.0.1:4173/`。
 
+## 测试与构建
+
+运行完整的本地构建：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\build-site.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-site.ps1
+```
+
+构建会检查四篇 Markdown 正文与 `article-data.js` 是否同步，并检查全部 JavaScript 语法。生成的 `dist/` 只包含网页运行文件；校验会阻止本名、本地路径、凭据、源码文档和失效的站内链接进入部署产物。
+
+GitHub Actions 会在每次 PR 和 `main` 推送时执行相同的测试与构建。PR 只验证，不发布；`main` 通过全部检查后自动部署到 GitHub Pages。
+
 ## 编辑当前关注
 
 本地预览时，“当前关注”卡片会显示“本地编辑”按钮，可以增删、改名和调整顺序。保存结果会留在当前浏览器中，刷新页面后仍然有效。
