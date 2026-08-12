@@ -52,6 +52,18 @@
   },
   "articles": [
     {
+      "slug": "building-huang-writing",
+      "content": "content/building-huang-writing.md",
+      "section": "buzz",
+      "title": "我写了个 Skill，试图批量生产文章，然后……",
+      "topic": "AI 写作实验",
+      "kicker": "AI 写作实验 / 博客首发",
+      "deck": "从整理个人语料、拆分双风格档案到第一次改稿翻车，记录 huang-writing 的构建过程和目前仍未解决的问题。",
+      "date": "首发于博客 2026-08-12",
+      "format": "markdown",
+      "order": 5
+    },
+    {
       "slug": "math-to-ai-courses",
       "content": "content/math-to-ai-courses.md",
       "section": "buzz",
