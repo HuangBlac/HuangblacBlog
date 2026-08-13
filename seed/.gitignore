@@ -1,0 +1,7 @@
+# Keep private chronicle data and generated artifacts out of the public repository.
+.shi-guan/
+*传.md
+initial-events/
+packages/
+**/__pycache__/
+*.py[cod]
