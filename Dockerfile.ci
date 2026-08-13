@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/powershell:7.4-ubuntu-22.04@sha256:62300a213a9293916333df2b014cd3a8f22fb0b0b65f2bb446aaf436bcf8c868
+
+ARG NODE_VERSION=24.19.0
+ARG NODE_SHA256=14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647
+
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates curl xz-utils \
+    && curl --fail --silent --show-error --location \
+      "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" \
+      --output /tmp/node.tar.xz \
+    && echo "${NODE_SHA256}  /tmp/node.tar.xz" | sha256sum --check --strict \
+    && mkdir --parents /opt/node \
+    && tar --extract --xz --file /tmp/node.tar.xz --directory /opt/node --strip-components=1 \
+    && rm --recursive --force /var/lib/apt/lists/* /tmp/node.tar.xz
+
+ENV PATH="/opt/node/bin:${PATH}"
+
+WORKDIR /workspace
+
+ENTRYPOINT ["pwsh", "-NoLogo", "-NoProfile", "-File", "./scripts/verify-site.ps1"]
