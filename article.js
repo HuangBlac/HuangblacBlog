@@ -2,7 +2,8 @@ const articleCatalog = window.articleCatalog ?? {};
 const catalogArticles = Array.isArray(articleCatalog.articles)
   ? [...articleCatalog.articles].sort((a, b) => a.order - b.order)
   : [];
-const slug = new URLSearchParams(window.location.search).get("slug");
+const pathSlug = window.location.pathname.match(/\/article\/([^/]+)\/?$/)?.[1];
+const slug = new URLSearchParams(window.location.search).get("slug") ?? pathSlug;
 const article = catalogArticles.find((item) => item.slug === slug);
 const section = articleCatalog.sections?.[article?.section];
 const stage = articleCatalog.stages?.find((item) => item.id === article?.stage);
@@ -23,6 +24,46 @@ const seriesSection = document.querySelector("[data-series-section]");
 const seriesLabel = document.querySelector("[data-series-label]");
 const seriesTitle = document.querySelector("[data-series-title]");
 const seriesNav = document.querySelector("[data-series-nav]");
+const articleSchema = document.querySelector("[data-article-schema]");
+const isStaticArticlePath = window.location.pathname.includes("/article/");
+
+function resolveSiteHref(href) {
+  return isStaticArticlePath && !/^(?:https?:|#)/.test(href) ? `../../${href}` : href;
+}
+
+function setMeta(selector, value) {
+  const element = document.querySelector(selector);
+  if (element && value) element.setAttribute("content", value);
+}
+
+function setArticleMetadata() {
+  if (!article) return;
+  const canonicalUrl = `https://huangblac.com/article/${encodeURIComponent(article.slug)}/`;
+  const pageTitle = `${article.title}｜小黑的晓店`;
+  const canonical = document.querySelector('link[rel="canonical"]');
+  document.title = pageTitle;
+  canonical?.setAttribute("href", canonicalUrl);
+  setMeta('meta[name="description"]', article.deck);
+  setMeta('meta[property="og:title"]', pageTitle);
+  setMeta('meta[property="og:description"]', article.deck);
+  setMeta('meta[property="og:url"]', canonicalUrl);
+  setMeta('meta[name="twitter:title"]', pageTitle);
+  setMeta('meta[name="twitter:description"]', article.deck);
+
+  if (articleSchema) {
+    articleSchema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: article.title,
+      description: article.deck,
+      author: { "@type": "Person", name: "黄晓黑" },
+      publisher: { "@type": "Person", name: "黄晓黑" },
+      image: "https://huangblac.com/assets/huangblac-avatar-512.png",
+      mainEntityOfPage: canonicalUrl,
+      ...(article.datePublished ? { datePublished: article.datePublished } : {}),
+    });
+  }
+}
 
 function setSectionContext() {
   sectionNavLinks.forEach((link) => {
@@ -34,7 +75,7 @@ function setSectionContext() {
     contextElement.textContent = "站内原文归档";
     readerAside.hidden = true;
     backLinks.forEach((link) => {
-      link.href = "index.html";
+      link.href = resolveSiteHref("index.html");
       link.textContent = link.classList.contains("article-back")
         ? "← 返回首页"
         : "返回首页 ←";
@@ -44,7 +85,7 @@ function setSectionContext() {
 
   contextElement.textContent = section.context;
   backLinks.forEach((link) => {
-    link.href = section.anchor;
+    link.href = resolveSiteHref(section.anchor);
     link.textContent = link.classList.contains("article-back")
       ? `← 返回${section.label}`
       : `返回${section.label} ←`;
@@ -67,7 +108,9 @@ function renderSeries() {
   seriesNav.replaceChildren(
     ...relatedArticles.map((item) => {
       const link = document.createElement("a");
-      link.href = `article.html?slug=${encodeURIComponent(item.slug)}`;
+      link.href = isStaticArticlePath
+        ? `../${encodeURIComponent(item.slug)}/`
+        : `article.html?slug=${encodeURIComponent(item.slug)}`;
       link.textContent = item.title;
       if (item.slug === article.slug) link.setAttribute("aria-current", "page");
       return link;
@@ -78,11 +121,12 @@ function renderSeries() {
 
 setSectionContext();
 renderSeries();
+setArticleMetadata();
 
 if (!article || typeof markdown !== "string") {
   const destination = article && section
     ? { href: section.anchor, label: section.label }
-    : { href: "index.html", label: "首页" };
+    : { href: resolveSiteHref("index.html"), label: "首页" };
 
   document.title = "文章不存在｜小黑的晓店";
   titleElement.textContent = "没有找到这篇文章";
@@ -98,7 +142,6 @@ if (!article || typeof markdown !== "string") {
   bodyElement.append(message, backLink);
   sourceFooter.hidden = true;
 } else {
-  document.title = `${article.title}｜小黑的晓店`;
   titleElement.textContent = article.title;
   kickerElement.textContent = article.kicker ?? `娱乐创作 / ${stage?.label ?? "创作"}`;
   deckElement.textContent = article.deck;

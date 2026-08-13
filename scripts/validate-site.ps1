@@ -18,6 +18,9 @@ if (-not (Test-Path -LiteralPath $resolvedSiteRoot -PathType Container)) {
 
 $requiredFiles = @(
   "index.html",
+  "404.html",
+  "robots.txt",
+  "sitemap.xml",
   "styles.css",
   "script.js",
   "site-data.js",
@@ -29,6 +32,8 @@ $requiredFiles = @(
   "caidan.html",
   "caidan.js",
   "after-hours.html",
+  "assets/favicon-32.png",
+  "assets/apple-touch-icon.png",
   ".nojekyll"
 )
 
@@ -112,6 +117,39 @@ foreach ($htmlFile in $htmlFiles) {
       throw "Broken local reference '$target' in '$($htmlFile.Name)'."
     }
   }
+}
+
+$catalog = (Get-Content -Raw -Encoding UTF8 (Join-Path $projectRoot "content/article-catalog.json")) | ConvertFrom-Json
+$articlePages = Get-ChildItem -LiteralPath (Join-Path $resolvedSiteRoot "article") -Recurse -Filter "index.html" -File
+if ($articlePages.Count -ne $catalog.articles.Count) {
+  throw "Built site contains $($articlePages.Count) static article pages; expected $($catalog.articles.Count)."
+}
+
+$sitemap = [System.IO.File]::ReadAllText((Join-Path $resolvedSiteRoot "sitemap.xml"), [System.Text.Encoding]::UTF8)
+foreach ($article in $catalog.articles) {
+  $expectedUrl = "https://huangblac.com/article/$($article.slug)/"
+  if (-not $sitemap.Contains("<loc>$expectedUrl</loc>")) {
+    throw "Sitemap is missing article URL '$expectedUrl'."
+  }
+
+  $articlePage = Join-Path $resolvedSiteRoot "article/$($article.slug)/index.html"
+  $articleHtml = [System.IO.File]::ReadAllText($articlePage, [System.Text.Encoding]::UTF8)
+  foreach ($requiredFragment in @(
+    "<meta property=`"og:title`" content=`"",
+    "<meta property=`"og:description`" content=`"",
+    "<meta property=`"og:url`" content=`"$expectedUrl`">",
+    "<link rel=`"canonical`" href=`"$expectedUrl`">",
+    '<script type="application/ld+json" data-article-schema>'
+  )) {
+    if (-not $articleHtml.Contains($requiredFragment)) {
+      throw "Static article page '$($article.slug)' is missing required metadata: $requiredFragment"
+    }
+  }
+}
+
+$publicCatalog = [System.IO.File]::ReadAllText((Join-Path $resolvedSiteRoot "article-catalog.js"), [System.Text.Encoding]::UTF8)
+if ($publicCatalog.Contains('"content"')) {
+  throw "Public article catalog still exposes source-only content paths."
 }
 
 Write-Output "Validated static site ($($textFiles.Count) text files, $($htmlFiles.Count) HTML files)."

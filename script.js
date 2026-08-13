@@ -1,4 +1,13 @@
 const navigationLinks = [...document.querySelectorAll("[data-nav] a[href^='#']")];
+
+const featuredDate = document.querySelector("[data-featured-date]");
+if (featuredDate && /^\d{4}-\d{2}-\d{2}$/.test(window.siteData?.featuredUpdated ?? "")) {
+  const [year, month] = window.siteData.featuredUpdated.split("-");
+  featuredDate.querySelector("[data-featured-month]").textContent = month;
+  featuredDate.querySelector("[data-featured-year]").textContent = year;
+  featuredDate.setAttribute("aria-label", `更新于 ${year}年${Number(month)}月`);
+}
+
 const observedSections = navigationLinks
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
@@ -194,7 +203,10 @@ const publicIndex = document.querySelector("[data-public-index]");
 const creativeIndex = document.querySelector("[data-creative-index]");
 
 function makeArticleHref(slug) {
-  return `article.html?slug=${encodeURIComponent(slug)}`;
+  if (window.location.protocol === "file:") {
+    return `article.html?slug=${encodeURIComponent(slug)}`;
+  }
+  return `article/${encodeURIComponent(slug)}/`;
 }
 
 function renderPublicIndex() {
