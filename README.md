@@ -35,7 +35,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\sync-article-data.ps1
 
 新增文章时，只需增加 Markdown 正文、在统一目录中登记元数据，再运行同步和统一验证脚本。构建输出中的文章总数与各阶段数量会随目录自动变化。
 
-工作、习作和游戏项目卡片仍直接维护在 `index.html`。右侧“当前关注”的公开默认值维护在 `site-data.js`；浏览器里的本地编辑只影响当前设备。
+工作、习作和游戏项目卡片仍直接维护在 `index.html`。右侧“当前关注”的公开默认值和首页精选更新时间维护在 `site-data.js`；浏览器里的本地编辑只影响当前设备。
+
+同步脚本负责重写文章浏览器数据，Docker 验证只检查它们是否已同步，不会自动修复。因此文章维护顺序固定为：修改目录或正文 → 运行 `sync-article-data.ps1` → 运行 `verify-site.ps1` 或 `verify-site-in-docker.ps1` → 提交。
 
 ## 测试与构建
 
@@ -50,6 +52,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-site.ps1
 - slug、顺序、栏目、阶段和正文路径合法且唯一；
 - 每份公开 Markdown 都已登记，两个生成文件与目录同步；
 - JavaScript 语法正确；
+- 每篇文章都生成 `/article/<slug>/` 静态页面，并包含分享、canonical 与 Article JSON-LD 元数据；
+- `sitemap.xml` 覆盖首页和全部正式文章 URL，公开目录不暴露 Markdown 源文件路径；
 - `dist/` 只包含发布所需文件；
 - 发布产物不含本名、本地路径、凭据、聊天导出信息或失效站内链接。
 
@@ -74,18 +78,20 @@ Docker 脚本使用 `Dockerfile.ci` 中固定摘要的 PowerShell 7.4 基础镜�
 ## 主要文件
 
 - `index.html`、`styles.css`、`script.js`：首页结构、视觉和交互。
-- `site-data.js`：公开的“当前关注”默认值。
-- `article.html`、`article.css`、`article.js`：统一文章阅读页。
+- `site-data.js`：公开的“当前关注”默认值与首页精选更新时间。
+- `article.html`、`article.css`、`article.js`：统一文章阅读模板和 `file://` 兼容入口；构建时生成正式静态文章 URL。
 - `content/article-catalog.json`：文章元数据唯一来源。
 - `content/`：公共写作与创作 Markdown 正文。
 - `article-catalog.js`、`article-data.js`：同步生成的浏览器数据。
 - `caidan.html`、`caidan.js`：隐藏入口谜题。
 - `after-hours.html`：建站理由与更新计划。
+- `404.html`、`robots.txt`：站点错误页与抓取规则；`sitemap.xml` 在构建时生成。
+- `assets/favicon-32.png`、`assets/apple-touch-icon.png`：浏览器与设备图标。
 - `scripts/`：目录同步、异常测试、构建和发布产物验证。
 - `Dockerfile.ci`：固定 PowerShell 与 Node.js 版本的 Linux 构建环境。
-- `个人博客-站点地图.md`：真实页面、入口和数据流。
-- `项目盘点.md`：网站实际展示项目的公开口径。
-- `四类内容的意义.md`：四分法的精炼设计依据。
+- `docs/个人博客-站点地图.md`：真实页面、入口和数据流。
+- `docs/项目盘点.md`：网站实际展示项目的公开口径。
+- `docs/四类内容的意义.md`：四分法的精炼设计依据。
 
 ## 发布边界
 

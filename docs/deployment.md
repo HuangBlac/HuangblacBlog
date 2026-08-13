@@ -24,10 +24,14 @@
 
 ## GitHub Pages 设置
 
+截至 2026-08-13，仓库使用 GitHub Actions 发布，自定义域名 `huangblac.com` 已通过域名保护验证，`main` 的容器化构建和 Pages 部署成功。GitHub 尚未生成可用证书，因此 `Enforce HTTPS` 仍为关闭状态；此时不能把 HTTP 跳转或 HSTS 视为已经完成。
+
 1. 在 GitHub 个人设置的 Pages / Domains 中添加 `huangblac.com`，按 GitHub 给出的主机记录和值在阿里云添加 TXT 验证记录，并长期保留。
 2. 在仓库 Settings → Pages → Custom domain 填写 `huangblac.com`。
 3. 等待 Custom domain 旁出现绿色检查标记；DNS 解析成功不等于 HTTPS 证书已经签发。
 4. 证书可用后勾选 Enforce HTTPS，并测试裸域、`www`、HTTP→HTTPS、文章深链接和手机端资源。
+
+证书可用后再通过 Pages 设置或 GitHub API 开启强制 HTTPS。若 API 返回 `The certificate does not exist yet`，表示设置尚未生效，应继续等待或按下方顺序检查 DNS 与证书申请，不要重复提交代码。
 
 当前工作流是自定义 GitHub Actions 发布，仓库不需要手工添加 `CNAME` 文件。
 
@@ -37,6 +41,7 @@
 - 保存自定义域名后数分钟仍未完成：在仓库 Pages 中移除并重新添加一次自定义域名，以重新触发证书申请。
 - 超过 24 小时仍未完成：检查阿里云是否存在冲突记录、CAA 是否阻止 `letsencrypt.org`，并查看对应提交的 Actions 是否成功。
 - 正式域名异常时：先使用 GitHub Pages 回退入口确认发布版本，再恢复 DNS 记录；不要在 DNS 仍指向 GitHub Pages 时先解绑自定义域名。
+- 文章分享或搜索收录异常：确认最新 Actions 成功，并检查 `/article/<slug>/`、`sitemap.xml`、`robots.txt` 和页面源代码中的 Open Graph、canonical 与 JSON-LD；不要只看浏览器运行脚本后的 DOM。
 
 ## 发布前隐私检查
 
