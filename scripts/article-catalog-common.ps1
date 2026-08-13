@@ -174,7 +174,26 @@ function Get-ArticleContentMap($context) {
 }
 
 function Get-GeneratedCatalogJavaScript($context) {
-  return "window.articleCatalog = $($context.CatalogJson);`n"
+  $publicCatalog = [ordered]@{
+    sections = $context.Catalog.sections
+    stages = $context.Catalog.stages
+    series = $context.Catalog.series
+    creative = $context.Catalog.creative
+    articles = @(
+      $context.Catalog.articles | ForEach-Object {
+        $publicArticle = [ordered]@{}
+        foreach ($property in $_.PSObject.Properties) {
+          if ($property.Name -ne "content") {
+            $publicArticle[$property.Name] = $property.Value
+          }
+        }
+        $publicArticle
+      }
+    )
+  }
+  $json = $publicCatalog | ConvertTo-Json -Depth 12 -Compress
+  $json = $json.Replace("&", "\u0026").Replace("'", "\u0027").Replace("<", "\u003c").Replace(">", "\u003e")
+  return "window.articleCatalog = $json;`n"
 }
 
 function Get-GeneratedArticleDataJavaScript($context) {
