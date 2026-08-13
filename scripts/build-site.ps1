@@ -12,13 +12,14 @@ if (-not $OutputPath) {
 }
 
 $resolvedOutput = [System.IO.Path]::GetFullPath($OutputPath)
-$projectBoundary = $projectRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
+$outputParent = [System.IO.Path]::GetDirectoryName($resolvedOutput)
+$outputName = [System.IO.Path]::GetFileName($resolvedOutput)
 
 if (
-  $resolvedOutput -eq $projectRoot -or
-  -not $resolvedOutput.StartsWith($projectBoundary, [System.StringComparison]::OrdinalIgnoreCase)
+  -not $outputParent.Equals($projectRoot, [System.StringComparison]::OrdinalIgnoreCase) -or
+  $outputName -notmatch '^dist(?:-[a-z0-9][a-z0-9-]*)?$'
 ) {
-  throw "Build output must be a child directory of the project root."
+  throw "Build output must be a direct child of the project root named 'dist' or 'dist-*'."
 }
 
 & (Join-Path $PSScriptRoot "check-article-sync.ps1")

@@ -10,5 +10,6 @@ ChatGPT-四类内容的意义.md
 .vscode/
 .idea/
 dist/
+dist-*/
 Thumbs.db
 .DS_Store
