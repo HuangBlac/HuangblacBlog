@@ -70,13 +70,70 @@
 .article-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 1.5rem;
   margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid #4d535c;
   color: #aeb5bf;
   font-size: 0.7rem;
   font-weight: 800;
+}
+
+.article-byline,
+.article-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+}
+
+.article-share {
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.article-share-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--acid);
+  border-radius: 0;
+  color: var(--acid);
+  background: transparent;
+  font: inherit;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.article-share-button:hover {
+  color: var(--nav);
+  background: var(--acid);
+}
+
+.article-share-button:focus-visible {
+  outline: 3px solid var(--paper);
+  outline-offset: 3px;
+}
+
+.article-share-button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.article-share-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.article-share-status {
+  min-width: 9.5rem;
+  color: var(--acid);
+  text-align: right;
 }
 
 .article-body {
@@ -265,6 +322,21 @@
 
   .article-header h1 {
     font-size: clamp(2.15rem, 12vw, 3.4rem);
+  }
+
+  .article-meta,
+  .article-share {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .article-share {
+    gap: 0.45rem;
+  }
+
+  .article-share-status {
+    min-width: 0;
+    text-align: left;
   }
 
   .article-body {

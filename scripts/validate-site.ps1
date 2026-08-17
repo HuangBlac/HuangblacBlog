@@ -139,7 +139,9 @@ foreach ($article in $catalog.articles) {
     "<meta property=`"og:description`" content=`"",
     "<meta property=`"og:url`" content=`"$expectedUrl`">",
     "<link rel=`"canonical`" href=`"$expectedUrl`">",
-    '<script type="application/ld+json" data-article-schema>'
+    '<script type="application/ld+json" data-article-schema>',
+    'data-article-share',
+    'data-article-share-status'
   )) {
     if (-not $articleHtml.Contains($requiredFragment)) {
       throw "Static article page '$($article.slug)' is missing required metadata: $requiredFragment"

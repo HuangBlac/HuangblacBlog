@@ -25,7 +25,12 @@ const seriesLabel = document.querySelector("[data-series-label]");
 const seriesTitle = document.querySelector("[data-series-title]");
 const seriesNav = document.querySelector("[data-series-nav]");
 const articleSchema = document.querySelector("[data-article-schema]");
+const shareWrap = document.querySelector("[data-article-share-wrap]");
+const shareButton = document.querySelector("[data-article-share]");
+const shareLabel = document.querySelector("[data-article-share-label]");
+const shareStatus = document.querySelector("[data-article-share-status]");
 const isStaticArticlePath = window.location.pathname.includes("/article/");
+let shareFeedbackTimer;
 
 function resolveSiteHref(href) {
   return isStaticArticlePath && !/^(?:https?:|#)/.test(href) ? `../../${href}` : href;
@@ -36,9 +41,15 @@ function setMeta(selector, value) {
   if (element && value) element.setAttribute("content", value);
 }
 
+function getCanonicalArticleUrl() {
+  return article
+    ? `https://huangblac.com/article/${encodeURIComponent(article.slug)}/`
+    : "https://huangblac.com/";
+}
+
 function setArticleMetadata() {
   if (!article) return;
-  const canonicalUrl = `https://huangblac.com/article/${encodeURIComponent(article.slug)}/`;
+  const canonicalUrl = getCanonicalArticleUrl();
   const pageTitle = `${article.title}｜小黑的晓店`;
   const canonical = document.querySelector('link[rel="canonical"]');
   document.title = pageTitle;
@@ -63,6 +74,84 @@ function setArticleMetadata() {
       ...(article.datePublished ? { datePublished: article.datePublished } : {}),
     });
   }
+}
+
+function setShareFeedback(message, label = "分享文章") {
+  window.clearTimeout(shareFeedbackTimer);
+  shareStatus.textContent = message;
+  shareLabel.textContent = label;
+  shareFeedbackTimer = window.setTimeout(() => {
+    shareStatus.textContent = "";
+    shareLabel.textContent = "分享文章";
+  }, 2400);
+}
+
+async function copyArticleLink(url) {
+  let copied = false;
+
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(url);
+      copied = true;
+    } catch {
+      copied = false;
+    }
+  }
+
+  if (!copied) {
+    const input = document.createElement("textarea");
+    try {
+      input.value = url;
+      input.setAttribute("readonly", "");
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      document.body.append(input);
+      input.select();
+      copied = document.execCommand("copy");
+    } catch {
+      copied = false;
+    } finally {
+      input.remove();
+    }
+  }
+
+  if (copied) {
+    setShareFeedback("正式文章链接已复制", "已复制");
+  } else {
+    window.prompt("复制这篇文章的正式链接：", url);
+    setShareFeedback("请在弹窗中手动复制", "复制链接");
+  }
+}
+
+function setupArticleShare() {
+  if (!article || !shareButton) {
+    if (shareWrap) shareWrap.hidden = true;
+    return;
+  }
+
+  const canonicalUrl = getCanonicalArticleUrl();
+  shareButton.setAttribute("aria-label", `分享文章：${article.title}`);
+  shareButton.addEventListener("click", async () => {
+    shareButton.disabled = true;
+    try {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: article.title,
+            text: article.deck,
+            url: canonicalUrl,
+          });
+          setShareFeedback("分享完成", "已分享");
+          return;
+        } catch (error) {
+          if (error?.name === "AbortError") return;
+        }
+      }
+      await copyArticleLink(canonicalUrl);
+    } finally {
+      shareButton.disabled = false;
+    }
+  });
 }
 
 function setSectionContext() {
@@ -122,6 +211,7 @@ function renderSeries() {
 setSectionContext();
 renderSeries();
 setArticleMetadata();
+setupArticleShare();
 
 if (!article || typeof markdown !== "string") {
   const destination = article && section
