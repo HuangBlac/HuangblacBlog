@@ -52,6 +52,24 @@
   },
   "articles": [
     {
+      "slug": "math-data-statistics-outlook",
+      "content": "content/math-data-statistics-outlook.md",
+      "section": "buzz",
+      "title": "数据科学与大数据技术、信息与计算科学、统计学哪个前景最好啊？",
+      "topic": "专业选择",
+      "kicker": "专业选择 / 知乎回答",
+      "deck": "从数院培养方案、人工智能相关去向与实践能力出发，比较信息与计算科学、统计学和数据科学与大数据技术。",
+      "date": "发布于 2026-08-17",
+      "datePublished": "2026-08-17",
+      "source": {
+        "label": "知乎原回答",
+        "url": "https://www.zhihu.com/question/14027057349/answer/2072803677916640163"
+      },
+      "series": "math-transition",
+      "format": "markdown",
+      "order": 1
+    },
+    {
       "slug": "building-huang-writing",
       "content": "content/building-huang-writing.md",
       "section": "buzz",
