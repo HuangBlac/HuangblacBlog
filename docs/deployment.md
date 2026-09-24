@@ -24,7 +24,7 @@
 
 ## GitHub Pages 设置
 
-截至 2026-08-13，仓库使用 GitHub Actions 发布，自定义域名 `huangblac.com` 已通过域名保护验证，`main` 的容器化构建和 Pages 部署成功。GitHub 尚未生成可用证书，因此 `Enforce HTTPS` 仍为关闭状态；此时不能把 HTTP 跳转或 HSTS 视为已经完成。
+截至 2026-09-24，仓库仍由 GitHub Actions 发布，`huangblac.com` 的 Pages API 已回读 `https_enforced=true`、正式 HTTPS 活动页返回 200，裸域 HTTP 请求跳往 HTTPS。2026-08-13 的证书未就绪记录仅是历史状态，现已被本次验证取代；个别 GitHub Pages 回退入口可能短暂保留旧缓存，核对时应检查完整跳转链。
 
 1. 在 GitHub 个人设置的 Pages / Domains 中添加 `huangblac.com`，按 GitHub 给出的主机记录和值在阿里云添加 TXT 验证记录，并长期保留。
 2. 在仓库 Settings → Pages → Custom domain 填写 `huangblac.com`。
