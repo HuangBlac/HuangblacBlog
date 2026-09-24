@@ -18,6 +18,14 @@ python -m http.server 4173 --bind 127.0.0.1
 
 访问 <http://127.0.0.1:4173/>。也可以直接双击 `index.html`，但本地服务器更接近 GitHub Pages 的访问方式。
 
+## 高松灯杯征集通告维护
+
+`gaosongdeng-cup.html` 是高松灯杯的独立正式征集通告，首页简介下方提供入口；专用样式在 `gaosongdeng-cup.css`。规则直接写在静态 HTML 中，支持 `file://` 阅读，不进入文章目录。便于复制传播的宣传文字稿暂存于被 Git 忽略的 `work/高松灯杯-站点实施/promotion/gaosongdeng-cup.md`；通告是唯一规则来源，宣传稿待通告上线后再转发。
+
+本地文件完成不代表活动已经开放。通告首次成功公开时开始接稿，开放北京时间先登记在内部台账，再回填页面；后续部署不改变开放时刻。发布前须检查两邮箱收件、TomoriCup 仓库公开、PR 和 Issue 可用，以及投稿说明与所有链接。发布后若评分无法按原定时间完成，须在 11 月 22 日公开进度和新时间。
+
+活动页及样式已接入构建白名单，正式 URL 为 `https://huangblac.com/gaosongdeng-cup.html`，构建时写入 sitemap；这不表示页面已经部署。维护后仍运行下方统一验证入口，检查静态元数据、站内链接和隐私边界。宣传文字稿与内部筹备材料不进入发布产物。
+
 ## 文章维护
 
 `content/article-catalog.json` 是全部公开文章元数据的唯一来源，正文位于 `content/`：
@@ -54,7 +62,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-site.ps1
 - 每份公开 Markdown 都已登记，两个生成文件与目录同步；
 - JavaScript 语法正确；
 - 每篇文章都生成 `/article/<slug>/` 静态页面，并包含分享、canonical 与 Article JSON-LD 元数据；
-- `sitemap.xml` 覆盖首页和全部正式文章 URL，公开目录不暴露 Markdown 源文件路径；
+- `sitemap.xml` 覆盖首页、活动页和全部正式文章 URL，公开目录不暴露 Markdown 源文件路径；
 - `dist/` 只包含发布所需文件；
 - 发布产物不含本名、本地路径、凭据、聊天导出信息或失效站内链接。
 
@@ -87,6 +95,8 @@ Docker 脚本使用 `Dockerfile.ci` 中固定摘要的 PowerShell 7.4 基础镜�
 - `caidan.html`、`caidan.js`：隐藏入口谜题。
 - `after-hours.html`：建站理由与更新计划。
 - `404.html`、`robots.txt`：站点错误页与抓取规则；`sitemap.xml` 在构建时生成。
+- `gaosongdeng-cup.html`、`gaosongdeng-cup.css`：高松灯杯正式征集通告与样式。
+- `work/高松灯杯-站点实施/promotion/gaosongdeng-cup.md`：本地传播文字稿草稿，不进入 Git 或构建产物。
 - `assets/favicon-32.png`、`assets/apple-touch-icon.png`：浏览器与设备图标。
 - `scripts/`：目录同步、异常测试、构建和发布产物验证。
 - `Dockerfile.ci`：固定 PowerShell 与 Node.js 版本的 Linux 构建环境。

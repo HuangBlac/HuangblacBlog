@@ -61,6 +61,8 @@ $publicFiles = @(
   "caidan.html",
   "caidan.js",
   "after-hours.html",
+  "gaosongdeng-cup.html",
+  "gaosongdeng-cup.css",
   "assets/huangblac-avatar-512.png",
   "assets/favicon-32.png",
   "assets/apple-touch-icon.png"
@@ -93,6 +95,7 @@ $articleTemplate = [System.IO.File]::ReadAllText((Join-Path $projectRoot "articl
 $catalog = (Get-Content -Raw -Encoding UTF8 (Join-Path $projectRoot "content/article-catalog.json")) | ConvertFrom-Json
 $sitemapUrls = New-Object System.Collections.Generic.List[string]
 $sitemapUrls.Add("$siteUrl/")
+$sitemapUrls.Add("$siteUrl/gaosongdeng-cup.html")
 
 foreach ($article in $catalog.articles) {
   $articleUrl = "$siteUrl/article/$($article.slug)/"

@@ -32,6 +32,8 @@ $requiredFiles = @(
   "caidan.html",
   "caidan.js",
   "after-hours.html",
+  "gaosongdeng-cup.html",
+  "gaosongdeng-cup.css",
   "assets/favicon-32.png",
   "assets/apple-touch-icon.png",
   ".nojekyll"
@@ -126,6 +128,66 @@ if ($articlePages.Count -ne $catalog.articles.Count) {
 }
 
 $sitemap = [System.IO.File]::ReadAllText((Join-Path $resolvedSiteRoot "sitemap.xml"), [System.Text.Encoding]::UTF8)
+$eventUrl = "https://huangblac.com/gaosongdeng-cup.html"
+if (-not $sitemap.Contains("<loc>$eventUrl</loc>")) {
+  throw "Sitemap is missing event URL '$eventUrl'."
+}
+$eventHtml = [System.IO.File]::ReadAllText((Join-Path $resolvedSiteRoot "gaosongdeng-cup.html"), [System.Text.Encoding]::UTF8)
+foreach ($requiredFragment in @(
+  "<link rel=`"canonical`" href=`"$eventUrl`">",
+  "<meta property=`"og:url`" content=`"$eventUrl`">",
+  '<meta name="description" content="',
+  '<meta property="og:title" content="',
+  '<meta property="og:description" content="',
+  '<meta property="og:image" content="',
+  '<meta name="twitter:card" content="summary">',
+  '<meta name="twitter:title" content="',
+  '<meta name="twitter:description" content="',
+  '<meta name="twitter:image" content="',
+  '<link rel="icon" href="assets/favicon-32.png"',
+  '<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"'
+)) {
+  if (-not $eventHtml.Contains($requiredFragment)) {
+    throw "Static event page is missing required metadata: $requiredFragment"
+  }
+}
+foreach ($requiredFragment in @(
+  '2026-11-22T00:00:00+08:00',
+  'huangblac@gmail.com',
+  '1239256942@qq.com',
+  'https://github.com/HuangBlac/TomoriCup',
+  '68.6'
+)) {
+  if (-not $eventHtml.Contains($requiredFragment)) {
+    throw "Static event page is missing an agreed rule: $requiredFragment"
+  }
+}
+foreach ($requiredPattern in @(
+  '\u6b63\u5f0f\u5f81\u96c6\u901a\u544a',
+  '\u5b8c\u6210\u5ea6\u5360 50 \u5206',
+  '\u53ef\u4f53\u9a8c\u4e0e\u53ef\u68c0\u9a8c\u7a0b\u5ea6\u5360 30 \u5206',
+  '\u60f3\u6cd5\u5360 20 \u5206',
+  '\u7b2c\u4e09\u5341\u516d\u5c4a\u5168\u56fd\u9ad8\u677e\u706f\u676f\u9ed1\u5ba2\u677e\u7ade\u8d5b\u51a0\u519b',
+  '\u6295\u7a3f\u5373\u6388\u6743'
+)) {
+  if (-not [regex]::IsMatch($eventHtml, $requiredPattern)) {
+    throw "Static event page is missing an agreed rule matching: $requiredPattern"
+  }
+}
+foreach ($obsoletePattern in @(
+  '2000\u5b57',
+  '\u91d1\u989d\u5f85\u516c\u5e03',
+  '\u5c1a\u672a\u5f00\u653e\u6295\u7a3f',
+  '\u6d3b\u52a8\u9884\u544a'
+)) {
+  if ([regex]::IsMatch($eventHtml, $obsoletePattern)) {
+    throw "Static event page contains obsolete copy matching: $obsoletePattern"
+  }
+}
+$homeHtml = [System.IO.File]::ReadAllText((Join-Path $resolvedSiteRoot "index.html"), [System.Text.Encoding]::UTF8)
+if (-not $homeHtml.Contains('href="gaosongdeng-cup.html"') -or -not [regex]::IsMatch($homeHtml, '\u9605\u8bfb\u6b63\u5f0f\u5f81\u96c6\u901a\u544a')) {
+  throw "Homepage does not link to the formal event notice."
+}
 foreach ($article in $catalog.articles) {
   $expectedUrl = "https://huangblac.com/article/$($article.slug)/"
   if (-not $sitemap.Contains("<loc>$expectedUrl</loc>")) {

@@ -1650,6 +1650,31 @@ a {
   }
 }
 
+.event-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1.25rem;
+  padding: 1rem clamp(1rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+  border-left: 4px solid var(--orange);
+  background: var(--paper-warm);
+  line-height: 1.8;
+}
+
+.event-notice > span {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.event-notice > a {
+  font-weight: 700;
+}
+
+.event-notice > small {
+  font-size: 0.8rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
