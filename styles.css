@@ -530,6 +530,64 @@ a {
   font-weight: 900;
 }
 
+#work .content-entry {
+  align-items: start;
+}
+
+#work .entry-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+#work .entry-label,
+#work .entry-meta {
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+#work .entry-label {
+  padding: 0 0 0 0.7rem;
+  border-left-width: 4px;
+  letter-spacing: 0.02em;
+}
+
+#work .entry-meta {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+#work .entry-copy h3 {
+  margin: 0.55rem 0 0;
+  line-height: 1.32;
+}
+
+#work .keep-together {
+  white-space: nowrap;
+}
+
+#work .entry-copy > p:not(.entry-meta) {
+  margin: 0.85rem 0 0;
+  line-height: 1.8;
+}
+
+#work .entry-link {
+  margin-top: 1.15rem;
+}
+
+#work .section-heading > p {
+  text-wrap: pretty;
+}
+
+@media (min-width: 561px) {
+  #work .content-entry {
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    column-gap: clamp(1.35rem, 2.5vw, 2.25rem);
+  }
+}
+
 .practice-list {
   padding-inline: clamp(1.4rem, 3.4vw, 3.2rem);
 }
