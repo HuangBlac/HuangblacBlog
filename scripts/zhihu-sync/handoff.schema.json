@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://huangblac.com/schemas/zhihu-handoff-v1.json",
+  "title": "Zhihu full-body handoff manifest",
+  "description": "Publishable contract for one future Zhihu answer or article. This schema does not anonymize text. Null or omitted freshness, body, privacy, or approval fields are unknown; the ingestion CLI holds them and does not invent values. A collector CSV is not a valid instance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "item",
+    "provenance",
+    "baseline",
+    "privacy_clearance",
+    "publish_approval"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "canonical_url", "state", "title", "body_markdown", "body_sha256", "deck", "deck_provenance"],
+      "properties": {
+        "kind": { "enum": ["answer", "article"] },
+        "id": { "type": "string", "pattern": "^[0-9]{1,24}$" },
+        "question_id": { "type": ["string", "null"], "pattern": "^[0-9]{1,24}$" },
+        "canonical_url": { "type": "string" },
+        "state": { "const": "published" },
+        "title": { "type": "string", "minLength": 1 },
+        "body_markdown": { "type": "string", "minLength": 1 },
+        "body_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "deck": { "type": "string", "minLength": 1, "maxLength": 180 },
+        "deck_provenance": { "const": "exact_excerpt" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "producer",
+        "collected_at",
+        "published_at",
+        "modified_at",
+        "time_source",
+        "published_at_precision",
+        "modified_at_precision",
+        "collected_at_precision"
+      ],
+      "properties": {
+        "producer": { "type": "string", "minLength": 1 },
+        "collected_at": { "type": ["string", "null"] },
+        "published_at": { "type": ["string", "null"] },
+        "modified_at": { "type": ["string", "null"] },
+        "time_source": { "enum": ["exact_source_timestamp", "date_only", "unknown"] },
+        "published_at_precision": { "enum": ["instant", "day", "unknown"] },
+        "modified_at_precision": { "enum": ["instant", "day", "unknown"] },
+        "collected_at_precision": { "enum": ["instant", "day", "unknown"] }
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseline_id", "relation"],
+      "properties": {
+        "baseline_id": { "type": ["string", "null"] },
+        "relation": { "enum": ["after_baseline", "historic", "in_baseline", "unknown"] }
+      }
+    },
+    "privacy_clearance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "method",
+        "cleared_by",
+        "cleared_at",
+        "attestation",
+        "hold_reasons",
+        "argument_unchanged",
+        "name_substitution_used",
+        "regex_anonymizer_used"
+      ],
+      "properties": {
+        "status": { "enum": ["cleared", "held", "unreviewed"] },
+        "method": { "enum": ["separate_review", "regex", "automatic", "name_substitution", "redaction_by_replacement"] },
+        "cleared_by": { "type": ["string", "null"] },
+        "cleared_at": { "type": ["string", "null"] },
+        "attestation": { "type": ["string", "null"] },
+        "hold_reasons": { "type": "array", "items": { "type": "string" } },
+        "argument_unchanged": { "type": "boolean" },
+        "name_substitution_used": { "type": "boolean" },
+        "regex_anonymizer_used": { "type": "boolean" }
+      }
+    },
+    "publish_approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "approval_id", "approved_by", "approved_at"],
+      "properties": {
+        "decision": { "enum": ["approve", "hold"] },
+        "approval_id": { "type": "string" },
+        "approved_by": { "type": "string" },
+        "approved_at": { "type": "string" }
+      }
+    },
+    "hold_release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hold_id", "confirm_token"],
+      "properties": {
+        "hold_id": { "type": "string" },
+        "confirm_token": { "type": "string" }
+      }
+    }
+  }
+}

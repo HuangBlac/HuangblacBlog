@@ -43,6 +43,10 @@
 - 正式域名异常时：先使用 GitHub Pages 回退入口确认发布版本，再恢复 DNS 记录；不要在 DNS 仍指向 GitHub Pages 时先解绑自定义域名。
 - 文章分享或搜索收录异常：确认最新 Actions 成功，并检查 `/article/<slug>/`、`sitemap.xml`、`robots.txt` 和页面源代码中的 Open Graph、canonical 与 JSON-LD；不要只看浏览器运行脚本后的 DOM。
 
+## 知乎交接不在这里部署
+
+`scripts/zhihu_ingest.py` 只在显式批准后把一篇未来的知乎回答或文章写入目录和 Markdown。它不运行同步，不上传 Pages，也不因采集 CSV 发生变化而发布。写入之后仍要执行 `sync-article-data.ps1` 和 `verify-site.ps1`，再经 PR 合并到 `main`，才由现有工作流部署。细节和当前阻塞项见 [`zhihu-ingest.md`](zhihu-ingest.md)。
+
 ## 发布前隐私检查
 
 公开文章和 `dist/` 不得包含未确认公开的本地绝对路径、设备信息、正文、凭据或聊天导出信息。文章中的虚构文本、错位地址和叙事道具不应被自动当作真实环境信息；只有确认其确实暴露真实本地环境时，才需要改写或移除。

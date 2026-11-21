@@ -48,6 +48,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\sync-article-data.ps1
 
 同步脚本负责重写文章浏览器数据，Docker 验证只检查它们是否已同步，不会自动修复。因此文章维护顺序固定为：修改目录或正文 → 运行 `sync-article-data.ps1` → 运行 `verify-site.ps1` 或 `verify-site-in-docker.ps1` → 提交。
 
+未来新的知乎回答或文章不从采集 CSV 直接上站。父流程先调用 `scripts/zhihu_ingest.py`，通过后仍走上面的同步和验证；工具不部署。交接清单、暂扣条件和当前还不能自动上站的原因见 [`docs/zhihu-ingest.md`](docs/zhihu-ingest.md)。
+
 ## 测试与构建
 
 每轮修改后统一运行一个入口：
@@ -58,6 +60,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-site.ps1
 
 该脚本固定执行文章目录异常测试、静态构建和发布产物验证。它会验证：
 
+- 知乎交接清单的拒绝、暂扣、幂等和显式批准；
 - slug、顺序、栏目、阶段和正文路径合法且唯一；
 - 每份公开 Markdown 都已登记，两个生成文件与目录同步；
 - JavaScript 语法正确；
@@ -72,7 +75,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-site.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\verify-site-in-docker.ps1
 ```
 
-Docker 脚本使用 `Dockerfile.ci` 中固定摘要的 PowerShell 7.4 基础镜像，以及带官方 SHA-256 校验的 Node.js 24.19.0，并在容器中调用同一个 `verify-site.ps1`。每轮都会执行 `docker build`，但未变化的镜像层会由 Docker 自动复用；不会静默使用与当前 Dockerfile 不一致的旧镜像。
+Docker 脚本使用 `Dockerfile.ci` 中固定摘要的 PowerShell 7.4 基础镜像，以及带官方 SHA-256 校验的 Node.js 24.19.0，并在容器中调用同一个 `verify-site.ps1`。镜像内的 `python3` 只运行知乎交接测试，不参与页面构建。每轮都会执行 `docker build`，但未变化的镜像层会由 Docker 自动复用；不会静默使用与当前 Dockerfile 不一致的旧镜像。
 
 构建输出只允许使用项目根目录下的 `dist` 或 `dist-*`，避免误传目录时覆盖正文或源码。Linux 主机运行 Docker 包装时，容器会使用当前用户身份写入产物，避免留下 root 所有的文件。
 
@@ -98,7 +101,9 @@ Docker 脚本使用 `Dockerfile.ci` 中固定摘要的 PowerShell 7.4 基础镜�
 - `gaosongdeng-cup.html`、`gaosongdeng-cup.css`：高松灯杯正式征集通告与样式。
 - `work/高松灯杯-站点实施/promotion/gaosongdeng-cup.md`：本地传播文字稿草稿，不进入 Git 或构建产物。
 - `assets/favicon-32.png`、`assets/apple-touch-icon.png`：浏览器与设备图标。
-- `scripts/`：目录同步、异常测试、构建和发布产物验证。
+- `scripts/`：目录同步、异常测试、构建、发布产物验证，以及 `zhihu_ingest.py` 知乎交接入口。
+- `scripts/zhihu-sync/`：基线、空台账和交接清单 schema。不含知乎正文。
+- `docs/zhihu-ingest.md`：交接清单、父流程接法和尚未自动上站的阻塞项。
 - `Dockerfile.ci`：固定 PowerShell 与 Node.js 版本的 Linux 构建环境。
 - `docs/个人博客-站点地图.md`：真实页面、入口和数据流。
 - `docs/项目盘点.md`：网站实际展示项目的公开口径。
