@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "baseline_id": "zhihu-site-baseline-2026-11-21",
+  "sealed_at": "2026-11-22T00:00:00+08:00",
+  "note": "History is closed at this instant. Identities already on huangblac.com and three previously prepared Zhihu pieces stay inside the baseline. This file has no article bodies. Null identity fields are unknown and must not be guessed.",
+  "known": [
+    {
+      "disposition": "already_on_site",
+      "kind": "answer",
+      "id": "2072803677916640163",
+      "question_id": "14027057349",
+      "canonical_url": "https://www.zhihu.com/question/14027057349/answer/2072803677916640163",
+      "site_slug": "math-data-statistics-outlook"
+    },
+    {
+      "disposition": "already_on_site",
+      "kind": "answer",
+      "id": "2068708878309758218",
+      "question_id": "2060844556388774290",
+      "canonical_url": "https://www.zhihu.com/question/2060844556388774290/answer/2068708878309758218",
+      "site_slug": "math-to-ai-courses"
+    },
+    {
+      "disposition": "already_on_site",
+      "kind": "answer",
+      "id": "2040152802853380110",
+      "question_id": "1948843451870349237",
+      "canonical_url": "https://www.zhihu.com/question/1948843451870349237/answer/2040152802853380110",
+      "site_slug": "math-to-cs"
+    },
+    {
+      "disposition": "already_on_site",
+      "kind": "answer",
+      "id": "2025602014432752160",
+      "question_id": "664610171",
+      "canonical_url": "https://www.zhihu.com/question/664610171/answer/2025602014432752160",
+      "site_slug": "math-outlook"
+    },
+    {
+      "disposition": "already_on_site",
+      "kind": "answer",
+      "id": "1979250728703915584",
+      "question_id": "1976403480596997396",
+      "canonical_url": "https://www.zhihu.com/question/1976403480596997396/answer/1979250728703915584",
+      "site_slug": "math-interdisciplinary"
+    }
+  ],
+  "holds": [
+    {
+      "hold_id": "zh-p01",
+      "disposition": "held_pending_confirmation",
+      "kind": "answer",
+      "id": null,
+      "question_id": null,
+      "canonical_url": null,
+      "title": "为什么没一个院士率领团队研发出AI大模型，院士对社会的意义是什么？",
+      "hold_reasons": [
+        "explicit_confirmation_required",
+        "canonical_identity_incomplete"
+      ],
+      "confirmation": null
+    },
+    {
+      "hold_id": "zh-p02",
+      "disposition": "held_pending_confirmation",
+      "kind": "answer",
+      "id": "2097852338241385822",
+      "question_id": "2095959673673184671",
+      "canonical_url": "https://www.zhihu.com/question/2095959673673184671/answer/2097852338241385822",
+      "title": "如果论文不再是科研成果最好的载体，AI研究者还可以用什么方式证明自己的贡献？",
+      "hold_reasons": [
+        "explicit_confirmation_required"
+      ],
+      "confirmation": null
+    },
+    {
+      "hold_id": "zh-p03",
+      "disposition": "held_pending_confirmation",
+      "kind": "answer",
+      "id": "2092989715863674894",
+      "question_id": "2091364528986527206",
+      "canonical_url": "https://www.zhihu.com/question/2091364528986527206/answer/2092989715863674894",
+      "title": "目前，AI for Math受到广泛关注，那么，反过来，Math for AI，具有怎样的研究前景？",
+      "hold_reasons": [
+        "explicit_confirmation_required"
+      ],
+      "confirmation": null
+    }
+  ]
+}

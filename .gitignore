@@ -6,6 +6,9 @@ ChatGPT-四类内容的意义.md
 项目盘点.md
 
 # Local tooling and editor state.
+scripts/zhihu-sync/.ingest.lock
+__pycache__/
+*.pyc
 .agents/
 .codex/
 .vscode/
