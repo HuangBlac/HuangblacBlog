@@ -166,6 +166,16 @@
       "order": 40
     },
     {
+      "slug": "creative-043",
+      "content": "content/creative/creative-043.md",
+      "section": "creative",
+      "title": "高松灯不知去向",
+      "deck": "池袋的夜里，灯又走回了那块闪烁的招牌。听筒那头，有人让她继续往前。",
+      "stage": "finished",
+      "format": "prose",
+      "order": 1
+    },
+    {
       "slug": "creative-027",
       "content": "content/creative/creative-027.md",
       "section": "creative",
