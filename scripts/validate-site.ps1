@@ -185,8 +185,15 @@ foreach ($obsoletePattern in @(
   }
 }
 $homeHtml = [System.IO.File]::ReadAllText((Join-Path $resolvedSiteRoot "index.html"), [System.Text.Encoding]::UTF8)
-if (-not $homeHtml.Contains('href="gaosongdeng-cup.html"') -or -not [regex]::IsMatch($homeHtml, '\u9605\u8bfb\u6b63\u5f0f\u5f81\u96c6\u901a\u544a')) {
-  throw "Homepage does not link to the formal event notice."
+foreach ($closedCallPattern in @(
+  'class="event-notice"',
+  'href="gaosongdeng-cup.html"',
+  '\u6295\u7a3f\u5df2\u5f00\u653e',
+  '\u9605\u8bfb\u6b63\u5f0f\u5f81\u96c6\u901a\u544a'
+)) {
+  if ([regex]::IsMatch($homeHtml, $closedCallPattern)) {
+    throw "Homepage still promotes the closed event call: $closedCallPattern"
+  }
 }
 foreach ($article in $catalog.articles) {
   $expectedUrl = "https://huangblac.com/article/$($article.slug)/"
